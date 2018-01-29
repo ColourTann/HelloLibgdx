@@ -10,21 +10,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Main extends ApplicationAdapter {
-	ShapeRenderer shape;
+    ShapeRenderer shape;
     List<Ball> balls = new ArrayList<>();
-
+    Random r = new Random();
 	@Override
 	public void create() {
 		shape = new ShapeRenderer();
 		for(int i=0;i<10;i++){
-		    balls.add(new Ball(random(Gdx.graphics.getWidth()), random(Gdx.graphics.getHeight()), random(100), random(15), random(15)));
+		    balls.add(new Ball(r.nextInt(Gdx.graphics.getWidth()), r.nextInt(Gdx.graphics.getHeight()), r.nextInt(100), r.nextInt(15), r.nextInt(15)));
         }
 
 	}
-
-	private int random(int max){
-	    return (int)(Math.random()*max);
-    }
 
 	@Override
 	public void render() {
