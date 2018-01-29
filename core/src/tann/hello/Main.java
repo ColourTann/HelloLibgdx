@@ -3,31 +3,40 @@ package tann.hello;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+	ShapeRenderer shape;
+    int x = 50;
+    int y = 50;
+    int xSpeed = 5;
+
+    List<Ball> balls = new ArrayList<>();
 
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	public void create() {
+		shape = new ShapeRenderer();
+		for(int i=0;i<10;i++){
+		    balls.add(new Ball(random(Gdx.graphics.getWidth()), random(Gdx.graphics.getHeight()), random(100), random(15), random(15)));
+        }
+
 	}
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
+	private int random(int max){
+	    return (int)(Math.random()*max);
+    }
 
 	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	public void render() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        for(Ball ball:balls){
+            ball.update();
+            ball.draw(shape);
+        }
 	}
+
 }
