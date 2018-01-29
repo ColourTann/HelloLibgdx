@@ -11,10 +11,6 @@ import java.util.Random;
 
 public class Main extends ApplicationAdapter {
 	ShapeRenderer shape;
-    int x = 50;
-    int y = 50;
-    int xSpeed = 5;
-
     List<Ball> balls = new ArrayList<>();
 
 	@Override
