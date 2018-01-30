@@ -12,14 +12,15 @@ import java.util.Random;
 
 public class Main extends ApplicationAdapter {
     ShapeRenderer shape;
+    Bar bar = new Bar();
     List<Ball> balls = new ArrayList<>();
     Random r = new Random();
 	@Override
 	public void create() {
 		shape = new ShapeRenderer();
-		for(int i=0;i<10;i++){
-		    balls.add(new Ball(r.nextInt(Gdx.graphics.getWidth()), r.nextInt(Gdx.graphics.getHeight()), r.nextInt(100), r.nextInt(15), r.nextInt(15)));
-        }
+		for(int i=0;i<1;i++){
+		    balls.add(new Ball(50, 50, 20, 5, 5));
+    }
 
 	}
 
@@ -27,6 +28,8 @@ public class Main extends ApplicationAdapter {
 	public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         shape.begin(ShapeType.Filled);
+        bar.update();
+        bar.draw(shape);
         for(Ball ball:balls){
             ball.update();
             ball.draw(shape);
