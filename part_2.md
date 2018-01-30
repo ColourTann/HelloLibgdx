@@ -1,4 +1,4 @@
-# Part two: Breakout!
+# Part two: Almost Breakout!
 This part of the tutorial will not show you all the code you need to write. It will give you problems you'll need to solve yourself. A big part of gamedev and coding is learning to solve problems yourself!
 
 First of all, we should probably change our ball-craziness to a single ball. Also we should make it a nice size and speed for breakout, I recommend keeping it as a list of a single ball though so it will be easy to add multiball mode later on.

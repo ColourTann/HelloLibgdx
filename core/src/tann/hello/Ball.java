@@ -51,4 +51,18 @@ public class Ball {
         }
         return true;
     }
+
+    public void checkCollision(Block block) {
+        if(collidesWith(block)){
+            ySpeed = - ySpeed;
+            block.destroyed=true;
+        }
+    }
+
+    private boolean collidesWith(Block block) {
+        if(x + size < block.x || x-size > block.x+block.width || y + size < block.y || y-size > block.y + block.height){
+            return false;
+        }
+        return true;
+    }
 }
