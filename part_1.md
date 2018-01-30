@@ -1,21 +1,18 @@
-Hello and welcome to this tutorial!
+Hello and welcome to this tutorial! 
 
-First things first: Are you in the right place?
-You must be interested in game development to be here but:
+First things first: Are you in the right place? You must be interested in game development to be here but...
 
-If you have never coded before then please go to [processing](http://hello.processing.org/) and close this tab! It's a great introduction to coding with a focus on easy visual stuff!
+- **I have never coded before**. Please go to [processing](http://hello.processing.org/) and close this tab! It's a great introduction to coding with a focus on easy visual stuff!
+- **I've made a bunch of games before and want a quick look at what LibGDX offers**. I recommend checking out [the official libgdx tutorial](https://github.com/libgdx/libgdx/wiki/A-simple-game). It's a good introduction to LibGDX but it assumes you understand the process of making a game. 
+- **Otherwise** you're in the right place! This tutorial will focus on the fundamentals of gamedev with as little config and annoyance as possible. It will assume you're familiar with the very basics of java objects and classes but not much more.
 
-If you've made a bunch of games before and want a quick look at what LibGDX offers, I recommend checking out [the official libgdx tutorial](https://github.com/libgdx/libgdx/wiki/A-simple-game). It's a good introduction to LibGDX but it assumes you understand the process of making a game. 
+First, you'll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can't really explain it better than https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle. I recommend unticking everything in the setup app so it looks like this though:
 
-Otherwise you're in the right place! This tutorial will focus on the fundamentals of gamedev with as little config and annoyance as possible. It will assume you're familiar with the very basics of java objects and classes but not much more.
-
-First, you'll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can't really explain it better than https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle. 
-I recommend unticking everything in the setup app so it looks like this though:
 ![alt text](http://tann.space/HelloLibgdx/setup.png "Logo Title Text 1")
 
-
-Now, if you have got everything working, you should have this monstrousity on your screen. 
+Now, if you have got everything working, you should have this monstrousity on your screen:
 ![alt text](http://tann.space/HelloLibgdx/awful.png "Logo Title Text 1")
+
 Wow, it's weird that they haven't made this nicer looking isn't it? I wouldn't think about it too much if I were you...
 
 
@@ -100,7 +97,7 @@ public void render(){
 }
 ```
 
-Gdx.graphics.getWidth() is the width of the screen in pixels. Once it gets past this, we reverse the direction of the circle. Simple enough! Plus we need to remember to reverse it again so it doesn't go off the left side of the screen too.
+Gdx.graphics.getWidth() is the width of the screen in pixels. Once it gets past this, we reverse the direction of the circle by changing the xSpeed variable. Simple enough! Plus we need to remember to reverse it again so it doesn't go off the left side of the screen too.
 
 Ok, bouncing ball, pretty simple. Our logic is getting a bit tangled and I think it's time to stick it in a class.
 ```Java
@@ -130,14 +127,11 @@ public class Ball {
     }
 
     public void draw(ShapeRenderer shape){
-        shape.begin(ShapeRenderer.ShapeType.Filled);
         shape.circle(x, y, size);
-
-        shape.end();
     }
 }
 ```
-I added vertical bounces and a definable speed. It's not too complicated but you should read it carefully to ensure you understand it.
+I added vertical bounces and a definable speed. It's not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if it does happen.
 
 Now in our main class, we can just replace it with this
 
@@ -156,12 +150,14 @@ public class Main extends ApplicationAdapter {
 	public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         ball.update();
+        shape.begin(ShapeType.Filled);
         ball.draw(shape);
+        shape.end();
 	}
 }
 ```
 
-ahh, much tidier. And we can change a bunch of stuff about the ball very simply from here!
+Ahh, much tidier. And we can change a bunch of stuff about the ball very simply from here!
 
 Next step is to go ball-crazy!
 Delete the reference to a single ball in Main.java and replace it a list, and add a bit of randomness underneath
@@ -170,10 +166,7 @@ List<Ball> balls = new ArrayList<>();
 Random r = new Random();
 ```
 
-
-
-
-in create() fill it with balls! And use our random to generate some random numbers between 0 and the argument we pass in. I've used different random bounds for each argument to keep things a bit sane.
+Fill this list with balls in create()! And use our random to generate some random numbers between 0 and the argument we pass in. I've used different random bounds for each argument to keep things a bit sane.
 ```Java
 for(int i=0;i<10;i++){
     balls.add(
@@ -183,23 +176,26 @@ for(int i=0;i<10;i++){
 }
 ```
 
-and then in render(), update and draw each ball in turn instead of just doing it to the single ball.
+Then in render(), update and draw each ball in turn instead of just doing it to the single ball.
 ```Java
+shape.begin(ShapeType.Filled);
 for(Ball ball:balls){
     ball.update();
     ball.draw(shape);
 }
+shape.end();
 ```
 
 ![alt text](http://tann.space/HelloLibgdx/bouncing.gif "Logo Title Text 1")
 
 Excellent! Now we're getting somewhere. We have some clean code and a cool effect with very little effort. Just drawing circles and a tiny bit of maths. 
 
-
-
-Next steps: Multicoloured balls! Fix the collision detection so it bounces off the edges more accurately, it's going into the wall half way right now. 10,000 balls?
+Next steps: 
+- Multicoloured balls! 
+- Fix the collision detection so it bounces off the edges more accurately, it's going into the wall half way right now.
+- 10,000 balls?
 
 What can we turn this into? How about the classic Breakout! We already have bouncing balls and balls bouncing off walls so we're half way there! Unfortunately it's probably the easy half but coding problems are the fun!
 
-Part 2 coming soon I hope!
+Click here for part 2
 

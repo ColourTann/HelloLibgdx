@@ -31,8 +31,6 @@ public class Ball {
     }
 
     public void draw(ShapeRenderer shape){
-        shape.begin(ShapeRenderer.ShapeType.Filled);
         shape.circle(x, y, size);
-        shape.end();
     }
 }
