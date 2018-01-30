@@ -1,201 +1,25 @@
-Hello and welcome to this tutorial! 
+# Part two: Breakout!
+This part of the tutorial will not show you all the code you need to write. It will give you problems you'll need to solve yourself. A big part of gamedev and coding is learning to solve problems yourself!
 
-First things first: Are you in the right place? You must be interested in game development to be here but...
+First of all, we should probably change our ball-craziness to a single ball. Also we should make it a nice size and speed for breakout, I recommend keeping it as a list of a single ball though so it will be easy to add multiball mode later on.
 
-- **I have never coded before**. Please go to [processing](http://hello.processing.org/) and close this tab! It's a great introduction to coding with a focus on easy visual stuff!
-- **I've made a bunch of games before and want a quick look at what LibGDX offers**. I recommend checking out [the official libgdx tutorial](https://github.com/libgdx/libgdx/wiki/A-simple-game). It's a good introduction to LibGDX but it assumes you understand the process of making a game. 
-- **Otherwise** you're in the right place! This tutorial will focus on the fundamentals of gamedev with as little config and annoyance as possible. It will assume you're familiar with the very basics of java objects and classes but not much more.
+Next, let's fix up the collision so it doesn't go half way into the sides. I recommend getting a pen and paper and trying to figure it out. 
 
-First, you'll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can't really explain it better than https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle. I recommend unticking everything in the setup app so it looks like this though:
+![](https://i.imgur.com/CVIuwJg.jpg)
 
-![alt text](http://tann.space/HelloLibgdx/setup.png "Logo Title Text 1")
+This skill will be useful for the rest of this tutorial and gamedev in general! I won't be providing the algorithm but you should get it working so it looks like this before continuing.
 
-Now, if you have got everything working, you should have this monstrousity on your screen:
-![alt text](http://tann.space/HelloLibgdx/awful.png "Logo Title Text 1")
+![](https://im3.ezgif.com/tmp/ezgif-3-a4c72338d0.gif)
 
-Wow, it's weird that they haven't made this nicer looking isn't it? I wouldn't think about it too much if I were you...
+Excellent, I hope you enjoyed figuring out that little puzzle because there's more to come!
 
-
-Anyway, open up Main.java (or whatever you called the class in core/src/something/something/) and delete it all (except the package declaration at the top) and replace it with this:
-
+Now we'll need a new class for the player-controlled bar thingy at the bottom. You can call it what you like but I've called it Bar. We can use the ShapeRenderer to draw a bar for this and set its position each frame to the position of the cursor.
 ```Java
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.GL20;
-
-public class Main extends ApplicationAdapter {
-	ShapeRenderer shape;
-
-	@Override
-	public void create () {
-		shape = new ShapeRenderer();
-	}
-
-	@Override
-	public void render () {
-	    shape.begin(ShapeRenderer.ShapeType.Filled);
-		shape.circle(50, 50, 50);
-		shape.end();
-	}
-}
+Gdx.input.getX(); // this returns the x position of the cursor in pixels
 ```
 
-Ok! Let's run through this.
-- create() runs once when your game starts.
-- a ShapeRenderer is something you can use to draw simple shapes.
-- render() runs every frame, which is probably about 60 times per second right now!
-- shape.circle(x, y, radius) draws a circle at the specified position.
-- In Libgdx: 0,0 is in the bottom right. 
+(add moving bar image)
 
-We're drawing a circle at 50, 50 with a radius of 50. Because it's drawn from the center, it touches the left and bottom edges of the screen.
+Right now it's not colliding with the ball so that's a bit useless. We need a method that can detect a collision between a bar and a ball now. This is a bit trickier than the previous method but there are some steps we can take to make it simpler.
 
-Right, it's pretty boring at the moment. Let's get this shape moving!
-
-To do this, we need to draw it at location specified by a variable and change that variable over time.
-Add some variables to the top of the class:
-```Java
-int x = 50;
-int y = 50;
-```
-and draw the at the x and y variables we create, along with incrementing the x variable.
-```Java
-@Override
-public void render() {
-    x += 5;
-	shape.begin(ShapeRenderer.ShapeType.Filled);
-	shape.circle(x, y, 50);
-	shape.end();
-}
-```
-
-
-Fantastic! A moving circle! Well... it's leaving a trail. That's because we need to set the screen back to black at the start of our render method.
-```Java
-Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
-```
-
-This sets the background to black. Just trust me on this :D
-
-![alt text](http://tann.space/HelloLibgdx/moving.gif "Logo Title Text 1")
-
-Now we have a circle which moves properly. Except it disappears off the edge. A simple way to fix this is to keep track of its position and start subtracting from x once it gets too far.
-
-We need another variable for this.
-```Java
-int xSpeed = 5;
-
-public void render(){
-	...
-	x += xSpeed;
-	if(x > Gdx.graphics.getWidth()){
-	    xSpeed = -5;
-	}
-	if(x < 0){
-    	xSpeed = 5;
-	}
-}
-```
-
-Gdx.graphics.getWidth() is the width of the screen in pixels. Once it gets past this, we reverse the direction of the circle by changing the xSpeed variable. Simple enough! Plus we need to remember to reverse it again so it doesn't go off the left side of the screen too.
-
-Ok, bouncing ball, pretty simple. Our logic is getting a bit tangled and I think it's time to stick it in a class.
-```Java
-public class Ball {
-    int x;
-    int y;
-    int size;
-    int xSpeed;
-    int ySpeed;
-    public Ball(int x, int y, int size, int xSpeed, int ySpeed){
-        this.x=x;
-        this.y=y;
-        this.size=size;
-        this.xSpeed=xSpeed;
-        this.ySpeed=ySpeed;
-    }
-
-    public void update(){
-        x += xSpeed;
-        y += ySpeed;
-        if(x<0 || x> Gdx.graphics.getWidth()){
-            xSpeed = -xSpeed;
-        }
-        if(y<0 || y> Gdx.graphics.getHeight()){
-            ySpeed = -ySpeed;
-        }
-    }
-
-    public void draw(ShapeRenderer shape){
-        shape.circle(x, y, size);
-    }
-}
-```
-I added vertical bounces and a definable speed. It's not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if it does happen.
-
-Now in our main class, we can just replace it with this
-
-```Java
-public class Main extends ApplicationAdapter {
-	ShapeRenderer shape;
-    Ball ball;
-
-	@Override
-	public void create() {
-		shape = new ShapeRenderer();
-		ball = new Ball(150, 200, 70, 12, 5);
-	}
-
-	@Override
-	public void render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        ball.update();
-        shape.begin(ShapeType.Filled);
-        ball.draw(shape);
-        shape.end();
-	}
-}
-```
-
-Ahh, much tidier. And we can change a bunch of stuff about the ball very simply from here!
-
-Next step is to go ball-crazy!
-Delete the reference to a single ball in Main.java and replace it a list, and add a bit of randomness underneath
-```Java
-List<Ball> balls = new ArrayList<>();
-Random r = new Random();
-```
-
-Fill this list with balls in create()! And use our random to generate some random numbers between 0 and the argument we pass in. I've used different random bounds for each argument to keep things a bit sane.
-```Java
-for(int i=0;i<10;i++){
-    balls.add(
-    new Ball(r.nextInt(Gdx.graphics.getWidth()),
-    r.nextInt(Gdx.graphics.getHeight()), 
-    r.nextInt(100), r.nextInt(15), r.nextInt(15)));
-}
-```
-
-Then in render(), update and draw each ball in turn instead of just doing it to the single ball.
-```Java
-shape.begin(ShapeType.Filled);
-for(Ball ball:balls){
-    ball.update();
-    ball.draw(shape);
-}
-shape.end();
-```
-
-![alt text](http://tann.space/HelloLibgdx/bouncing.gif "Logo Title Text 1")
-
-Excellent! Now we're getting somewhere. We have some clean code and a cool effect with very little effort. Just drawing circles and a tiny bit of maths. 
-
-Next steps: 
-- Multicoloured balls! 
-- Fix the collision detection so it bounces off the edges more accurately, it's going into the wall half way right now.
-- 10,000 balls?
-
-What can we turn this into? How about the classic Breakout! We already have bouncing balls and balls bouncing off walls so we're half way there! Unfortunately it's probably the easy half but coding problems are the fun!
-
-Click here for part 2
-
+but take your time and try to figure it out.

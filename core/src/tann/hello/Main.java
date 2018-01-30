@@ -31,6 +31,7 @@ public class Main extends ApplicationAdapter {
         bar.update();
         bar.draw(shape);
         for(Ball ball:balls){
+            ball.checkCollision(bar);
             ball.update();
             ball.draw(shape);
         }
