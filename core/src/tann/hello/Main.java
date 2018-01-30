@@ -19,7 +19,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		shape = new ShapeRenderer();
 		for(int i=0;i<1;i++){
-		    balls.add(new Ball(50, 50, 20, 5, 5));
+		    balls.add(new Ball(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 20, 4, 9));
     }
 
 	}

@@ -12,7 +12,7 @@ public class Bar {
   }
 
   public void update(){
-    x = Gdx.input.getX() - width/2;
+      x = Gdx.input.getX() - width/2;
   }
 
 
