@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +23,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
         shape = new ShapeRenderer();
 		for(int i=0;i<1;i++){
-		    balls.add(new Ball(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 20, 4, 9));
+		    balls.add(new Ball(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 8, 4, 9));
         }
         int blockWidth = 63;
         int blockHeight = 20;
@@ -45,6 +48,14 @@ public class Main extends ApplicationAdapter {
         }
         for(Block block:blocks){
             block.draw(shape);
+            balls.get(0).checkCollision(block);
+        }
+        for(int i=0;i<blocks.size();i++){
+            Block b = blocks.get(i);
+            if(b.destroyed){
+                blocks.remove(b);
+                i--;
+            }
         }
         shape.end();
 	}

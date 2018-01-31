@@ -43,29 +43,26 @@ public void checkCollision(Block block) {
         block.destoyed;
     }
 }
-```            for (int x = centralTileX - 1; x <= centralTileX + 1; x++) {
-                for (int y = centralTileY - 1; y <= centralTileY + 1; y++) {
-                    // Ignore the central tile
-                    if (x == centralTileX && y == centralTileY) {
-                        continue;
-                    }
+```
+Then hook up all the methods in the render() loop. We'll need to remove the blocks that get destroyed after checking the collisions. This is trickier than you might expect but I believe in you!
 
-                    Cell cell = TileLayer.getCell(x, y);
+![](http://tann.space/HelloLibgdx/final.gif)
 
-                    if (cell == null) {
-                        continue;
-                    }
+If everything is working you should have something like this! Well done! There is obviously a lot missing from this game but I won't bore you with explaining in detail how to do it all. It's time you spread your wings and probably google a bunch of stuff!
 
-                    switch (cell.getTile().getId) {
-                        case MY_NICE_INT_CONSTANT:
-                            return MY_OTHER_NICE_INT_CONSTANT;
+Some pointers though:
+- The collision is a bit wonky because we're just inverting the ySpeed when it hits. What about when it hits the side of a block? How can you detect that?
+- Give the players more control over the ball by making the bounce direction change based on where it hits the Paddle!
+- Add some colour and sounds!
+- Add levels and victory/loss conditions! This is can be a bit tricky.
+- Juice it up! [Watch this video to find out what I mean!](https://www.youtube.com/watch?v=Fy0aCDmgnxg)
 
-                        case MY_OTHER_NICE_INT_CONSTANT:
-                            return MY_OTHER_OTHER_NICE_INT_CONSTANT;
-                    }
-                }
-            }
+You may also want to rush head first into your own game. Luckily, most gamedev skills are very transferrable so you will be able to use some of the things you learnt here. 
 
-Then hook up all the methods in render() and we'll need to remove the blocks that get destroyed. This can be 
+There are a lot of cool tools in LibGDX and they're well worth checking out! I think it's often better to try making things without them first so you can understand how they might work and where they fit into your game though. Here's a couple good ones:
+
+- Box2D: Physics for your game! It can be used to make something like Angry Birds or even Breakout like we just did. It is a bit awkward to use and you may have trouble getting your character controls to feel right though. It's awesome if you want complicated physics and explosions though.
+- Scene2D: Great for UIs, gives you click detection simple tweening animations. Also has some stock UI elements you can use.
+- 3D??: If your heart is set on 3D then you may have a rough time. LibGDX does offer 3D rendering and 3D physics but will be a struggle! I recommend making a bunch of 2D games first so your basic LibGDX skills are great first. Or maybe you should try Unity!
 
 
