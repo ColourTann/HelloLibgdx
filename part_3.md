@@ -1,7 +1,10 @@
 # Part three: Breakout!
+[Part 1](http://tann.space/HelloLibgdx) | [Part 2](http://tann.space/HelloLibgdx/2) | Part 3
 
-Ok, next up is breakable blocks! First up we need a new class for Blocks! Or Bricks if you like. These need to basically just be a bigger rectangle. We need lots of them on the screen. 
+Ok, next up is breakable blocks! First up we need a new class for Blocks! Or Bricks if you like. These just need to be similar to the Paddle class fow now, except we need lots of them on the screen. 
 ```java
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 public class Block {
     int x,y,width,height;
     public Block(int x, int y, int width, int height) {
@@ -15,8 +18,9 @@ public class Block {
     }
 }
 ```
-Here's my block class to get you started. Now we to populate a list of them in the create() method and put them in a list, similar to the balls.
+Here's my block class to get you started. Now we should populate a list of them in the create() method and put them in a list, similar to the balls.
 ```java
+ArrayList<Block> blocks = new ArrayList<>();
 @Override
 public void create() {
     ...
@@ -29,26 +33,44 @@ public void create() {
     }
 }
 ```
-This is a bit of a mouthful but we're just iterating in a grid from half way up the screen upwards and across the screen, placing blocks as we go! I picked 63 as the block width just because it divides into the screen width nicely. Now, you just need to render the list of blocks in the render method and we get this:
+This is a bit of a mouthful but we're just iterating in a grid from half way up the screen upwards and across the screen, placing blocks as we go! I picked 63 as the block width just because it divides into the screen width nicely. Now, you just need to render the list of blocks (like we did with the list of balls) in the render method and we get this:
 
 ![](http://tann.space/HelloLibgdx/blocks.gif)
 
-A good start, but some things are still missing. Collision! And destroying blocks! So we need Balls to collide with both Blocks and Bars now. The smartypants amongst you may be thinking we should genericise the collision logic or move the collision logic to a more central place. You'd be right! But I won't tell anyone if you're lazy and just copy collidesWith(Bar bar) method and make a collidesWith(Block block) method ;)
+A good start, but some things are still missing. Collision! And destroying blocks! So we need balls to collide with both blocks and paddles now. The smartypants amongst you may be thinking we should genericise the collision logic or move the collision logic to a more central place. You'd be right! But I won't tell anyone if you're lazy and just copy collidesWith(Paddle paddle) method and make a collidesWith(Block block) method ;)
 
 The difference is that we need to destroy the block when the ball hits it. Make a lazy public boolean in the Block class and set it, in addition to reversing ySpeed when the ball hits a block.
 ```java
 public void checkCollision(Block block) {
     if(collidesWith(block)){
         ySpeed = - ySpeed;
-        block.destoyed;
+        block.destroyed = true;
     }
 }
 ```
-Then hook up all the methods in the render() loop. We'll need to remove the blocks that get destroyed after checking the collisions. This is trickier than you might expect but I believe in you!
+Then hook up all the methods in the render() loop. We'll need to pass in each block to the ball.checkCollision method and this can be done just after rendering them. We'll also need to remove the blocks that get destroyed after checking the collisions. This is trickier than you might expect so I'll show you how I've done it.
+
+```java
+public void render() {
+...
+    for(Block b:blocks){
+        b.draw(shape);
+        ball.checkCollision(b);
+    }
+    for(int i=0;i<blocks.size();i++){
+        Block b = blocks.get(i);
+        if(b.destroyed){
+            blocks.remove(b);
+            // we need to decrement i when a ball gets removed, otherwise we skip a ball!
+            i--;
+        }
+    }
+}
+```
 
 ![](http://tann.space/HelloLibgdx/final.gif)
 
-If everything is working you should have something like this! Well done! There is obviously a lot missing from this game but I won't bore you with explaining in detail how to do it all. It's time you spread your wings and probably google a bunch of stuff!
+If everything is working you should have something like this! Well done! There is obviously a lot missing from this game but I'm too lazy to explain it all in detail. It's time you spread your wings and probably google a bunch of stuff!
 
 Some pointers though:
 - The collision is a bit wonky because we're just inverting the ySpeed when it hits. What about when it hits the side of a block? How can you detect that?
@@ -62,7 +84,8 @@ You may also want to rush head first into your own game. Luckily, most gamedev s
 There are a lot of cool tools in LibGDX and they're well worth checking out! I think it's often better to try making things without them first so you can understand how they might work and where they fit into your game though. Here's a couple good ones:
 
 - Box2D: Physics for your game! It can be used to make something like Angry Birds or even Breakout like we just did. It is a bit awkward to use and you may have trouble getting your character controls to feel right though. It's awesome if you want complicated physics and explosions though.
-- Scene2D: Great for UIs, gives you click detection simple tweening animations. Also has some stock UI elements you can use.
+- Scene2D: Great for UIs, gives you click detection and simple tweening animations. Also has some stock UI elements you can use.
 - 3D??: If your heart is set on 3D then you may have a rough time. LibGDX does offer 3D rendering and 3D physics but will be a struggle! I recommend making a bunch of 2D games first so your basic LibGDX skills are great first. Or maybe you should try Unity!
 
+Anyway, thankyou for sitting through this tutorial and I wish you the best of luck!
 
