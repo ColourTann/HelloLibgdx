@@ -3,9 +3,9 @@ package tann.hello;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Bar {
+public class Paddle {
   int x,y,width,height;
-  public Bar(){
+  public Paddle(){
     this.y = 18;
     this.width = 90;
     this.height = 10;

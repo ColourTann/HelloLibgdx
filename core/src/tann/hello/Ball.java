@@ -2,10 +2,6 @@ package tann.hello;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-
-import java.util.Random;
-import java.util.Spliterator;
 
 public class Ball {
     int x;
@@ -39,13 +35,13 @@ public class Ball {
         shape.circle(x, y, size);
     }
 
-    public void checkCollision(Bar bar) {
+    public void checkCollision(Paddle bar) {
         if(collidesWith(bar)){
             ySpeed = - ySpeed;
         }
     }
 
-    private boolean collidesWith(Bar bar) {
+    private boolean collidesWith(Paddle bar) {
         if(x + size < bar.x || x-size > bar.x+bar.width || y + size < bar.y || y-size > bar.y + bar.height){
             return false;
         }
