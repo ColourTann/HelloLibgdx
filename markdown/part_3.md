@@ -26,8 +26,8 @@ public void create() {
     ...
     int blockWidth = 63;
     int blockHeight = 20;
-    for(int y=Gdx.graphics.getHeight()/2;y<Gdx.graphics.getHeight(); y+=blockHeight+10){
-        for(int x=0;x<Gdx.graphics.getWidth();x+=blockWidth+10){
+    for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 10) {
+        for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
             blocks.add(new Block(x, y, blockWidth, blockHeight));
         }
     }
@@ -53,13 +53,13 @@ Then hook up all the methods in the render() loop. We'll need to pass in each bl
 ```java
 public void render() {
 ...
-    for(Block b:blocks){
+    for (Block b : blocks) {
         b.draw(shape);
         ball.checkCollision(b);
     }
-    for(int i=0;i<blocks.size();i++){
+    for (int i = 0; i < blocks.size(); i++) {
         Block b = blocks.get(i);
-        if(b.destroyed){
+        if (b.destroyed) {
             blocks.remove(b);
             // we need to decrement i when a ball gets removed, otherwise we skip a ball!
             i--;
@@ -79,13 +79,11 @@ Some pointers though:
 - Add levels and victory/loss conditions! This is can be a bit tricky.
 - Juice it up! [Watch this video to find out what I mean!](https://www.youtube.com/watch?v=Fy0aCDmgnxg)
 
-You may also want to rush head first into your own game. Luckily, most gamedev skills are very transferrable so you will be able to use some of the things you learnt here. 
+You may also want to rush head first into your own game. Luckily, most gamedev skills are very transferrable so you will be able to use some of the things you learnt here. There's a lot more stuff in LibGDX that's good to learn. You don't need to know it all but here's some good foundational stuff:
 
-There are a lot of cool tools in LibGDX and they're well worth checking out! I think it's often better to try making things without them first so you can understand how they might work and where they fit into your game though. Here's a couple good ones:
+- [SpriteBatch](https://github.com/libgdx/libgdx/wiki/Spritebatch%2C-Textureregions%2C-and-Sprites): like a ShapeRenderer but for images!
+- [Simple](https://github.com/libgdx/libgdx/wiki/Input-handling) and [more advanced](https://github.com/libgdx/libgdx/wiki/Event-handling) input handline for key presses and clicks.
+- Basically just check out the [wiki](https://github.com/libgdx/libgdx/wiki/The-application-framework) haha. It's a bit dense in places but a lot better than most code documentation.
 
-- Box2D: Physics for your game! It can be used to make something like Angry Birds or even Breakout like we just did. It is a bit awkward to use and you may have trouble getting your character controls to feel right though. It's awesome if you want complicated physics and explosions though.
-- Scene2D: Great for UIs, gives you click detection and simple tweening animations. Also has some stock UI elements you can use.
-- 3D??: If your heart is set on 3D then you may have a rough time. LibGDX does offer 3D rendering and 3D physics but will be a struggle! I recommend making a bunch of 2D games first so your basic LibGDX skills are great first. Or maybe you should try Unity!
-
-Anyway, thankyou for sitting through this tutorial and I wish you the best of luck!
+Anyway, thankyou for sitting through this tutorial and I wish you the best of luck! Like, subscribe, leave a rating, [join my network of professional contacts on linkedin](https://twitter.com/colourtann) etc.
 

@@ -10,7 +10,7 @@ First things first: Are you in the right place? You must be interested in game d
 - **I've made a bunch of games before and want a quick look at what LibGDX offers**. I recommend checking out [the official libgdx tutorial](https://github.com/libgdx/libgdx/wiki/A-simple-game). It's a good introduction to LibGDX but it assumes you understand the process of making a game. 
 - **Otherwise** you're in the right place! This tutorial will focus on the fundamentals of gamedev with as little config and annoyance as possible. It will assume you're familiar with the very basics of java objects and classes but not much more.
 
-First, you'll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can't really explain it better than https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle. I recommend unticking everything in the setup app so it looks like this though:
+First, you'll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can't really explain it better than https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle. I recommend unticking most of the boxes in the setup app so it looks like similar to this though (your paths and names will be different and that's fine):
 
 ![](http://tann.space/HelloLibgdx/setup.png)
 
@@ -92,10 +92,10 @@ int xSpeed = 5;
 public void render(){
     ...
     x += xSpeed;
-    if(x > Gdx.graphics.getWidth()){
+    if (x > Gdx.graphics.getWidth()) {
         xSpeed = -5;
     }
-    if(x < 0){
+    if (x < 0) {
         xSpeed = 5;
     }
 }
@@ -108,34 +108,25 @@ Ok, bouncing ball, pretty simple. Our logic is getting a bit tangled though and 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Ball {
-    int x;
-    int y;
-    int size;
-    int xSpeed;
-    int ySpeed;
-    public Ball(int x, int y, int size, int xSpeed, int ySpeed){
-        this.x=x;
-        this.y=y;
-        this.size=size;
-        this.xSpeed=xSpeed;
-        this.ySpeed=ySpeed;
+public Ball(int x, int y, int size, int xSpeed, int ySpeed) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.xSpeed = xSpeed;
+    this.ySpeed = ySpeed;
+}
+public void update() {
+    x += xSpeed;
+    y += ySpeed;
+    if (x < 0 || x > Gdx.graphics.getWidth()) {
+        xSpeed = -xSpeed;
     }
-
-    public void update(){
-        x += xSpeed;
-        y += ySpeed;
-        if(x<0 || x> Gdx.graphics.getWidth()){
-            xSpeed = -xSpeed;
-        }
-        if(y<0 || y> Gdx.graphics.getHeight()){
-            ySpeed = -ySpeed;
-        }
+    if (y < 0 || y > Gdx.graphics.getHeight()) {
+        ySpeed = -ySpeed;
     }
-
-    public void draw(ShapeRenderer shape){
-        shape.circle(x, y, size);
-    }
+}
+public void draw(ShapeRenderer shape) {
+    shape.circle(x, y, size);
 }
 ```
 I added vertical bounces and a definable speed. It's not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if either happens.
@@ -185,18 +176,17 @@ public class MyGdxGame extends ApplicationAdapter {
 
 Fill this list with balls in create()! And use our random to generate some random numbers between 0 and the argument we pass in. I've used different random bounds for each argument to keep things a bit sane.
 ```Java
-for(int i=0;i<10;i++){
-    balls.add(
-    new Ball(r.nextInt(Gdx.graphics.getWidth()),
-    r.nextInt(Gdx.graphics.getHeight()), 
-    r.nextInt(100), r.nextInt(15), r.nextInt(15)));
+for (int i = 0; i < 10; i++) {
+    balls.add(new Ball(r.nextInt(Gdx.graphics.getWidth()),
+            r.nextInt(Gdx.graphics.getHeight()),
+            r.nextInt(100), r.nextInt(15), r.nextInt(15)));
 }
 ```
 
 Then in render(), update and draw each ball in turn instead of just doing it to the single ball.
 ```Java
 shape.begin(ShapeRenderer.ShapeType.Filled);
-for(Ball ball:balls){
+for (Ball ball : balls) {
     ball.update();
     ball.draw(shape);
 }
@@ -209,5 +199,5 @@ Excellent! Now we're getting somewhere. We have some clean code and a cool effec
 
 What can we turn this into? How about the classic Breakout! We already have bouncing balls and balls bouncing off walls so we're half way there! Unfortunately it's probably the easy half but coding problems are the fun!
 
-[Click here for part 2](http://tann.space/HelloLibgdx/2)
+[Click here for part 2](http://tann.space/HelloLibgdx/2.html)
 

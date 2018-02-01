@@ -73,4 +73,4 @@ Lock the y of the ball back to near the bottom of the screen, get the ball movin
 
 Well done for getting this far! In the next part, we'll be adding breakable blocks! Wow!
 
-[Part 3](http://tann.space/HelloLibgdx/3)
+[Part 3](http://tann.space/HelloLibgdx/3.html)
