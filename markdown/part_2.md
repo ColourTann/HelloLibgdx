@@ -1,5 +1,5 @@
 # Part two: Almost Breakout!
-[Part 1](http://tann.space/HelloLibgdx) | Part 2 | [Part 3](http://tann.space/HelloLibgdx/3)
+[Part 1](http://tann.space/HelloLibgdx) | Part 2 | [Part 3](http://tann.space/HelloLibgdx/3.html)
 
 This part of the tutorial will not show you all the code you need to write. It will give you problems you'll need to solve yourself. A big part of gamedev and coding is learning to solve problems yourself!
 

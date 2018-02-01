@@ -1,5 +1,5 @@
 # Part three: Breakout!
-[Part 1](http://tann.space/HelloLibgdx) | [Part 2](http://tann.space/HelloLibgdx/2) | Part 3
+[Part 1](http://tann.space/HelloLibgdx) | [Part 2](http://tann.space/HelloLibgdx/2.html) | Part 3
 
 Ok, next up is breakable blocks! First up we need a new class for Blocks! Or Bricks if you like. These just need to be similar to the Paddle class fow now, except we need lots of them on the screen. 
 ```java

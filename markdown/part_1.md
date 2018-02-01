@@ -1,6 +1,6 @@
 # LibGDX beginner tutorial
 # Part 1: Bouncey circles
-Part 1 | [Part 2](http://tann.space/HelloLibgdx/2) | [Part 3](http://tann.space/HelloLibgdx/3)
+Part 1 | [Part 2](http://tann.space/HelloLibgdx/2.html) | [Part 3](http://tann.space/HelloLibgdx/3.html)
 
 Hello and welcome to this tutorial! 
 
