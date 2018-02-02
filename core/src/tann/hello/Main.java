@@ -12,7 +12,7 @@ import java.util.Random;
 public class Main extends ApplicationAdapter {
     ShapeRenderer shape;
     Paddle paddle = new Paddle();
-    Ball ball = new Ball(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 8, 4, 9);
+    Ball ball;
     List<Block> blocks = new ArrayList<>();
     Random r = new Random();
 
@@ -26,6 +26,7 @@ public class Main extends ApplicationAdapter {
                 blocks.add(new Block(x, y, blockWidth, blockHeight));
             }
         }
+        ball = new Ball(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 8, 4, 9);
 
     }
 

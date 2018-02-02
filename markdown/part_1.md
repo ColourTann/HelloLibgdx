@@ -50,7 +50,7 @@ Ok! Let's run through this.
 - a ShapeRenderer is something you can use to draw simple shapes.
 - render() runs every frame, which is probably about 60 times per second right now!
 - shape.circle(x, y, radius) draws a circle at the specified position.
-- In Libgdx: 0,0 is in the bottom right. 
+- In Libgdx: 0,0 is the bottom left. 
 
 We're drawing a circle at 50, 50 with a radius of 50. Because it's drawn from the center, it touches the left and bottom edges of the screen.
 

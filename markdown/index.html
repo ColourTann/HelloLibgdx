@@ -19,7 +19,7 @@ auto;max-width:750px;line-height:1.6;font-size:18px;color:#444;padding:0
 <li><strong>I’ve made a bunch of games before and want a quick look at what LibGDX offers</strong>. I recommend checking out <a href="https://github.com/libgdx/libgdx/wiki/A-simple-game">the official libgdx tutorial</a>. It’s a good introduction to LibGDX but it assumes you understand the process of making a game.</li>
 <li><strong>Otherwise</strong> you’re in the right place! This tutorial will focus on the fundamentals of gamedev with as little config and annoyance as possible. It will assume you’re familiar with the very basics of java objects and classes but not much more.</li>
 </ul>
-<p>First, you’ll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can’t really explain it better than <a href="https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle">https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle</a>. I recommend unticking everything in the setup app so it looks like this though:</p>
+<p>First, you’ll need to get a libgdx project set up. This honestly a bit of a pain and many will fall at this first hurdle. I can’t really explain it better than <a href="https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle">https://github.com/libgdx/libgdx/wiki/Project-Setup-Gradle</a>. I recommend unticking most of the boxes in the setup app so it looks like similar to this though (your paths and names will be different and that’s fine):</p>
 <p><img src="http://tann.space/HelloLibgdx/setup.png" alt=""></p>
 <p>Now, if you have got everything working, you should have this monstrousity on your screen:<br>
 <img src="http://tann.space/HelloLibgdx/awful.png" alt=""></p>
@@ -53,7 +53,7 @@ Ok! Let’s run through this.</p>
 <li>a ShapeRenderer is something you can use to draw simple shapes.</li>
 <li>render() runs every frame, which is probably about 60 times per second right now!</li>
 <li>shape.circle(x, y, radius) draws a circle at the specified position.</li>
-<li>In Libgdx: 0,0 is in the bottom right.</li>
+<li>In Libgdx: 0,0 is the bottom left.</li>
 </ul>
 <p>We’re drawing a circle at 50, 50 with a radius of 50. Because it’s drawn from the center, it touches the left and bottom edges of the screen.</p>
 <p>Right, it’s pretty boring at the moment. Let’s get this shape moving!</p>
@@ -83,10 +83,10 @@ Add some variables to the top of the class:</p>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">render</span><span class="hljs-params">()</span></span>{
     ...
     x += xSpeed;
-    <span class="hljs-keyword">if</span>(x &gt; Gdx.graphics.getWidth()){
+    <span class="hljs-keyword">if</span> (x &gt; Gdx.graphics.getWidth()) {
         xSpeed = -<span class="hljs-number">5</span>;
     }
-    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span>){
+    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>) {
         xSpeed = <span class="hljs-number">5</span>;
     }
 }
@@ -96,34 +96,25 @@ Add some variables to the top of the class:</p>
 <pre><code class="language-Java"><span class="hljs-keyword">import</span> com.badlogic.gdx.Gdx;
 <span class="hljs-keyword">import</span> com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ball</span> </span>{
-    <span class="hljs-keyword">int</span> x;
-    <span class="hljs-keyword">int</span> y;
-    <span class="hljs-keyword">int</span> size;
-    <span class="hljs-keyword">int</span> xSpeed;
-    <span class="hljs-keyword">int</span> ySpeed;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Ball</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> xSpeed, <span class="hljs-keyword">int</span> ySpeed)</span></span>{
-        <span class="hljs-keyword">this</span>.x=x;
-        <span class="hljs-keyword">this</span>.y=y;
-        <span class="hljs-keyword">this</span>.size=size;
-        <span class="hljs-keyword">this</span>.xSpeed=xSpeed;
-        <span class="hljs-keyword">this</span>.ySpeed=ySpeed;
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Ball</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> xSpeed, <span class="hljs-keyword">int</span> ySpeed)</span> </span>{
+    <span class="hljs-keyword">this</span>.x = x;
+    <span class="hljs-keyword">this</span>.y = y;
+    <span class="hljs-keyword">this</span>.size = size;
+    <span class="hljs-keyword">this</span>.xSpeed = xSpeed;
+    <span class="hljs-keyword">this</span>.ySpeed = ySpeed;
+}
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span> </span>{
+    x += xSpeed;
+    y += ySpeed;
+    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span> || x &gt; Gdx.graphics.getWidth()) {
+        xSpeed = -xSpeed;
     }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span></span>{
-        x += xSpeed;
-        y += ySpeed;
-        <span class="hljs-keyword">if</span>(x&lt;<span class="hljs-number">0</span> || x&gt; Gdx.graphics.getWidth()){
-            xSpeed = -xSpeed;
-        }
-        <span class="hljs-keyword">if</span>(y&lt;<span class="hljs-number">0</span> || y&gt; Gdx.graphics.getHeight()){
-            ySpeed = -ySpeed;
-        }
+    <span class="hljs-keyword">if</span> (y &lt; <span class="hljs-number">0</span> || y &gt; Gdx.graphics.getHeight()) {
+        ySpeed = -ySpeed;
     }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(ShapeRenderer shape)</span></span>{
-        shape.circle(x, y, size);
-    }
+}
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(ShapeRenderer shape)</span> </span>{
+    shape.circle(x, y, size);
 }
 </code></pre>
 <p>I added vertical bounces and a definable speed. It’s not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if either happens.</p>
@@ -166,16 +157,15 @@ Delete the reference to a single ball in Main.java and replace it a list, and ad
     ...
 </code></pre>
 <p>Fill this list with balls in create()! And use our random to generate some random numbers between 0 and the argument we pass in. I’ve used different random bounds for each argument to keep things a bit sane.</p>
-<pre><code class="language-Java"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">10</span>;i++){
-    balls.add(
-    <span class="hljs-keyword">new</span> Ball(r.nextInt(Gdx.graphics.getWidth()),
-    r.nextInt(Gdx.graphics.getHeight()), 
-    r.nextInt(<span class="hljs-number">100</span>), r.nextInt(<span class="hljs-number">15</span>), r.nextInt(<span class="hljs-number">15</span>)));
+<pre><code class="language-Java"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+    balls.add(<span class="hljs-keyword">new</span> Ball(r.nextInt(Gdx.graphics.getWidth()),
+            r.nextInt(Gdx.graphics.getHeight()),
+            r.nextInt(<span class="hljs-number">100</span>), r.nextInt(<span class="hljs-number">15</span>), r.nextInt(<span class="hljs-number">15</span>)));
 }
 </code></pre>
 <p>Then in render(), update and draw each ball in turn instead of just doing it to the single ball.</p>
 <pre><code class="language-Java">shape.begin(ShapeRenderer.ShapeType.Filled);
-<span class="hljs-keyword">for</span>(Ball ball:balls){
+<span class="hljs-keyword">for</span> (Ball ball : balls) {
     ball.update();
     ball.draw(shape);
 }
