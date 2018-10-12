@@ -62,7 +62,7 @@ Add some variables to the top of the class:
 int x = 50;
 int y = 50;
 ```
-and draw the at the x and y variables we create, along with incrementing the x variable.
+and draw the circle at the x and y variables we create, along with incrementing the x variable.
 ```Java
 @Override
 public void render() {
@@ -79,7 +79,7 @@ Fantastic! A moving circle! Well... it's leaving a trail. That's because we need
 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 ```
 
-This sets the background to black. Just trust me on this :D
+This just clears the screen.
 
 ![alt text](http://tann.space/HelloLibgdx/moving.gif)
 
@@ -108,25 +108,34 @@ Ok, bouncing ball, pretty simple. Our logic is getting a bit tangled though and 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public Ball(int x, int y, int size, int xSpeed, int ySpeed) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    this.xSpeed = xSpeed;
-    this.ySpeed = ySpeed;
-}
-public void update() {
-    x += xSpeed;
-    y += ySpeed;
-    if (x < 0 || x > Gdx.graphics.getWidth()) {
-        xSpeed = -xSpeed;
+public class Ball {
+    
+    int x;
+    int y;
+    int size;
+    int xSpeed;
+    int ySpeed;
+
+    public Ball(int x, int y, int size, int xSpeed, int ySpeed) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
     }
-    if (y < 0 || y > Gdx.graphics.getHeight()) {
-        ySpeed = -ySpeed;
+    public void update() {
+        x += xSpeed;
+        y += ySpeed;
+        if (x < 0 || x > Gdx.graphics.getWidth()) {
+            xSpeed = -xSpeed;
+        }
+        if (y < 0 || y > Gdx.graphics.getHeight()) {
+            ySpeed = -ySpeed;
+        }
     }
-}
-public void draw(ShapeRenderer shape) {
-    shape.circle(x, y, size);
+    public void draw(ShapeRenderer shape) {
+        shape.circle(x, y, size);
+    }
 }
 ```
 I added vertical bounces and a definable speed. It's not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if either happens.

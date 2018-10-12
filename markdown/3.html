@@ -34,8 +34,8 @@ auto;max-width:750px;line-height:1.6;font-size:18px;color:#444;padding:0
     ...
     <span class="hljs-keyword">int</span> blockWidth = <span class="hljs-number">63</span>;
     <span class="hljs-keyword">int</span> blockHeight = <span class="hljs-number">20</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> y=Gdx.graphics.getHeight()/<span class="hljs-number">2</span>;y&lt;Gdx.graphics.getHeight(); y+=blockHeight+<span class="hljs-number">10</span>){
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> x=<span class="hljs-number">0</span>;x&lt;Gdx.graphics.getWidth();x+=blockWidth+<span class="hljs-number">10</span>){
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> y = Gdx.graphics.getHeight()/<span class="hljs-number">2</span>; y &lt; Gdx.graphics.getHeight(); y += blockHeight + <span class="hljs-number">10</span>) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; Gdx.graphics.getWidth(); x += blockWidth + <span class="hljs-number">10</span>) {
             blocks.add(<span class="hljs-keyword">new</span> Block(x, y, blockWidth, blockHeight));
         }
     }
@@ -55,13 +55,13 @@ auto;max-width:750px;line-height:1.6;font-size:18px;color:#444;padding:0
 <p>Then hook up all the methods in the render() loop. We’ll need to pass in each block to the ball.checkCollision method and this can be done just after rendering them. We’ll also need to remove the blocks that get destroyed after checking the collisions. This is trickier than you might expect so I’ll show you how I’ve done it.</p>
 <pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">render</span><span class="hljs-params">()</span> </span>{
 ...
-    <span class="hljs-keyword">for</span>(Block b:blocks){
+    <span class="hljs-keyword">for</span> (Block b : blocks) {
         b.draw(shape);
         ball.checkCollision(b);
     }
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;blocks.size();i++){
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; blocks.size(); i++) {
         Block b = blocks.get(i);
-        <span class="hljs-keyword">if</span>(b.destroyed){
+        <span class="hljs-keyword">if</span> (b.destroyed) {
             blocks.remove(b);
             <span class="hljs-comment">// we need to decrement i when a ball gets removed, otherwise we skip a ball!</span>
             i--;
@@ -79,13 +79,12 @@ auto;max-width:750px;line-height:1.6;font-size:18px;color:#444;padding:0
 <li>Add levels and victory/loss conditions! This is can be a bit tricky.</li>
 <li>Juice it up! <a href="https://www.youtube.com/watch?v=Fy0aCDmgnxg">Watch this video to find out what I mean!</a></li>
 </ul>
-<p>You may also want to rush head first into your own game. Luckily, most gamedev skills are very transferrable so you will be able to use some of the things you learnt here.</p>
-<p>There are a lot of cool tools in LibGDX and they’re well worth checking out! I think it’s often better to try making things without them first so you can understand how they might work and where they fit into your game though. Here’s a couple good ones:</p>
+<p>You may also want to rush head first into your own game. Luckily, most gamedev skills are very transferrable so you will be able to use some of the things you learnt here. There’s a lot more stuff in LibGDX that’s good to learn. You don’t need to know it all but here’s some good foundational stuff:</p>
 <ul>
-<li>Box2D: Physics for your game! It can be used to make something like Angry Birds or even Breakout like we just did. It is a bit awkward to use and you may have trouble getting your character controls to feel right though. It’s awesome if you want complicated physics and explosions though.</li>
-<li>Scene2D: Great for UIs, gives you click detection and simple tweening animations. Also has some stock UI elements you can use.</li>
-<li>3D??: If your heart is set on 3D then you may have a rough time. LibGDX does offer 3D rendering and 3D physics but will be a struggle! I recommend making a bunch of 2D games first so your basic LibGDX skills are great first. Or maybe you should try Unity!</li>
+<li><a href="https://github.com/libgdx/libgdx/wiki/Spritebatch%2C-Textureregions%2C-and-Sprites">SpriteBatch</a>: like a ShapeRenderer but for images!</li>
+<li><a href="https://github.com/libgdx/libgdx/wiki/Input-handling">Simple</a> and <a href="https://github.com/libgdx/libgdx/wiki/Event-handling">more advanced</a> input handline for key presses and clicks.</li>
+<li>Basically just check out the <a href="https://github.com/libgdx/libgdx/wiki/The-application-framework">wiki</a> haha. It’s a bit dense in places but a lot better than most code documentation.</li>
 </ul>
-<p>Anyway, thankyou for sitting through this tutorial and I wish you the best of luck!</p>
+<p>Anyway, thankyou for sitting through this tutorial and I wish you the best of luck! Like, subscribe, leave a rating, <a href="https://twitter.com/colourtann">join my network of professional contacts on linkedin</a> etc.</p>
 
 </body></html>

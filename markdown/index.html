@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>LibGDX beginner tutorial part 1</title><script type="text/javascript">
 //<![CDATA[
 window.__cfRocketOptions = {byc:0,p:0,petok:"9ad475a60dbf19598e9dbabd61c0c8b435ee65e8-1517264230-1800"};
@@ -62,7 +63,7 @@ Add some variables to the top of the class:</p>
 <pre><code class="language-Java"><span class="hljs-keyword">int</span> x = <span class="hljs-number">50</span>;
 <span class="hljs-keyword">int</span> y = <span class="hljs-number">50</span>;
 </code></pre>
-<p>and draw the at the x and y variables we create, along with incrementing the x variable.</p>
+<p>and draw the circle at the x and y variables we create, along with incrementing the x variable.</p>
 <pre><code class="language-Java"><span class="hljs-annotation">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">render</span><span class="hljs-params">()</span> </span>{
     x += <span class="hljs-number">5</span>;
@@ -74,7 +75,7 @@ Add some variables to the top of the class:</p>
 <p>Fantastic! A moving circle! Well… it’s leaving a trail. That’s because we need to set the screen back to black at the start of our render method.</p>
 <pre><code class="language-Java">Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 </code></pre>
-<p>This sets the background to black. Just trust me on this :D</p>
+<p>This just clears the screen.</p>
 <p><img src="http://tann.space/HelloLibgdx/moving.gif" alt="alt text"></p>
 <p>Now we have a circle which moves properly. Except it disappears off the edge. A simple way to fix this is to keep track of its position and start subtracting from x once it gets too far.</p>
 <p>We need another variable for this.</p>
@@ -96,25 +97,33 @@ Add some variables to the top of the class:</p>
 <pre><code class="language-Java"><span class="hljs-keyword">import</span> com.badlogic.gdx.Gdx;
 <span class="hljs-keyword">import</span> com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Ball</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> xSpeed, <span class="hljs-keyword">int</span> ySpeed)</span> </span>{
-    <span class="hljs-keyword">this</span>.x = x;
-    <span class="hljs-keyword">this</span>.y = y;
-    <span class="hljs-keyword">this</span>.size = size;
-    <span class="hljs-keyword">this</span>.xSpeed = xSpeed;
-    <span class="hljs-keyword">this</span>.ySpeed = ySpeed;
-}
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span> </span>{
-    x += xSpeed;
-    y += ySpeed;
-    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span> || x &gt; Gdx.graphics.getWidth()) {
-        xSpeed = -xSpeed;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ball</span> </span>{
+    <span class="hljs-keyword">int</span> x;
+    <span class="hljs-keyword">int</span> y;
+    <span class="hljs-keyword">int</span> size;
+    <span class="hljs-keyword">int</span> xSpeed;
+    <span class="hljs-keyword">int</span> ySpeed;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Ball</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> size, <span class="hljs-keyword">int</span> xSpeed, <span class="hljs-keyword">int</span> ySpeed)</span> </span>{
+        <span class="hljs-keyword">this</span>.x = x;
+        <span class="hljs-keyword">this</span>.y = y;
+        <span class="hljs-keyword">this</span>.size = size;
+        <span class="hljs-keyword">this</span>.xSpeed = xSpeed;
+        <span class="hljs-keyword">this</span>.ySpeed = ySpeed;
     }
-    <span class="hljs-keyword">if</span> (y &lt; <span class="hljs-number">0</span> || y &gt; Gdx.graphics.getHeight()) {
-        ySpeed = -ySpeed;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span> </span>{
+        x += xSpeed;
+        y += ySpeed;
+        <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span> || x &gt; Gdx.graphics.getWidth()) {
+            xSpeed = -xSpeed;
+        }
+        <span class="hljs-keyword">if</span> (y &lt; <span class="hljs-number">0</span> || y &gt; Gdx.graphics.getHeight()) {
+            ySpeed = -ySpeed;
+        }
     }
-}
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(ShapeRenderer shape)</span> </span>{
-    shape.circle(x, y, size);
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(ShapeRenderer shape)</span> </span>{
+        shape.circle(x, y, size);
+    }
 }
 </code></pre>
 <p>I added vertical bounces and a definable speed. It’s not too complicated but you should read it carefully to ensure you understand it. Instead of checking if the ball goes off the left or right side of the screen, we can simplify by just inverting the speed if either happens.</p>
